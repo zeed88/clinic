@@ -1,0 +1,782 @@
+<%- include("../header") %>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>ลงทะเบียนคุณหมอ</h1>
+                </div>
+
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <div class="card card-info card-tabs">
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
+                                    href="#general" role="tab" aria-controls="general" aria-selected="false"><i
+                                        class='bx bx-layer'></i> ข้อมูลทั่วไป</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="services" data-toggle="pill" href="#service" role="tab"
+                                    aria-controls="service" aria-selected="false"><i
+                                        class="fas fa-hand-holding-medical"></i>
+                                    บริการทางคลินิก</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="places" data-toggle="pill" href="#place" role="tab"
+                                    aria-controls="place" aria-selected="false"><i class="fas fa-building"></i></i>
+                                    สถานที่ทำงาน</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="institution" data-toggle="pill" href="#custom-tabs-one-settings"
+                                    role="tab" aria-controls="custom-tabs-one-settings" aria-selected="true"><i
+                                        class="fas fa-lightbulb"></i> สถานศึกษา</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="qualifications" data-toggle="pill" href="#qualification"
+                                    role="tab" aria-controls="qualification" aria-selected="true"><i
+                                        class="fas fa-graduation-cap"></i> ปริญญาบัตร</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="time_tables" data-toggle="pill" href="#time_table" role="tab"
+                                    aria-controls="time_table" aria-selected="true"><i class='bx bxs-calendar'></i>
+                                    ตารางสะดวกตรวจ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="general1">
+                            <div class="tab-pane fade active show" id="general" role="tabpanel"
+                                aria-labelledby="general">
+                                <h5>ข้อมูลทั่วไป</h5>
+                                <form ng-app="" class="frm-general" name="frm-general" enctype="multipart/form-data">
+                                    <div class="row row-cols-md-4 row-cols-sm-1">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*เลขที่บัตรประชาชน</label>
+
+                                                <input type="text" name="cardid" id="cardid" maxlength="13"
+                                                    class="form-control form-control-sm" required>
+                                                <span style="color: red;" class="err_card"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 col-lg-2">
+                                            <div class="form-group">
+                                                <label>*คำนำหน้าชื่อ</label>
+                                                <input type="text" name="title" id="title"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*ชื่อ</label>
+                                                <input type="text" name="name" id="name"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*นามสกุล</label>
+                                                <input type="text" name="lastname" id="lastname"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-md-12 row-cols-sm-12">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*ที่อยู่</label>
+                                                <input type="text" name="addr" id="addr"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="form-group">
+                                                <label>*ชื่อคลินิก</label>
+                                                <input type="text" name="clinic" id="clinic"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-md-12 row-cols-sm-12">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*เบอร์โทรศัพท์</label>
+                                                <input type="text" name="tel" id="tel"
+                                                    class="form-control form-control-sm"
+                                                    data-inputmask='"mask": "(999) 999-9999"' data-mask required>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*Email</label>
+                                                <input type="email" name="email" id="email"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>ID Line</label>
+                                                <input type="text" name="lineid" id="lineid"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-md-12 row-cols-sm-12">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*สาขาวิชาที่เชี่ยวชาญ</label>
+                                                <input type="text" name="fac" id="fac"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>*เฉพาะทาง</label>
+                                                <input type="text" name="spec" id="spec"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-md-12 row-cols-sm-12">
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>*รหัสผ่าน</label>
+                                                <input type="password" name="pwd" id="pwd" minlength="6"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>*ยืนยันรหัสผ่าน</label>
+                                                <input type="password" name="pwd2" id="pwd2" minlength="6"
+                                                    class="form-control form-control-sm" required>
+                                            </div>
+                                            <span class="err_pwd" style="color:red"></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-cols-md-12 row-cols-sm-12">
+                                        <div class="col-3">
+                                            <div class="col-3">
+                                                <img src="./images/unnamed.png" id="preview" width="300">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row row-cols-md-12 row-cols-sm-12">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>*รูปภาพ</label>
+                                                <input type="file" name="file" id="file" onchange="previewFile()"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                            class="bt-save-general btn bg-gradient-primary btn-lg bt-gen-save"><i
+                                                class='bx bxs-save'></i> บันทึก</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div ng-app="" class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service">
+                                <h5>บริการทางคลินิก</h5>
+                                <form class="frm-service">
+                                    <input type="hidden" name="cardid" id="cardid2" max-width="13" maxlength="13">
+                                    <div class="add-service">
+                                        <div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-service">1</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="serv" id="serv"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                            class="btn-save-service btn bg-gradient-primary btn-lg bt-gen-save"><i
+                                                class='bx bxs-save'></i> บันทึก</button>
+                                        <div class="float-right">
+                                            <button type="button"
+                                                class="bt-add-service btn btn-block bg-gradient-secondary btn-sm">
+                                                <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <br>
+
+                            </div>
+                            <div class="tab-pane fade" id="place" role="tabpanel"
+                                aria-labelledby="custom-tabs-one-messages-tab">
+                                <h5>สถานที่ทำงาน</h5>
+                                <form class="frm-place">
+                                    <input type="hidden" name="cardid" id="cardid3" max-width="13" maxlength="13">
+                                    <div class="add-place">
+                                        <div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-place">1</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="pl" id="pl"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                            class="btn-save-place btn bg-gradient-primary btn-lg bt-gen-save"><i
+                                                class='bx bxs-save'></i> บันทึก</button>
+                                        <div class="float-right">
+                                            <button type="button"
+                                                class="bt-add-place btn btn-block bg-gradient-secondary btn-sm">
+                                                <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="custom-tabs-one-settings" role="tabpanel"
+                                aria-labelledby="custom-tabs-one-settings-tab">
+                                <h5>สถานศึกษา</h5>
+                                <form class="frm-institution">
+                                    <input type="hidden" name="cardid" id="cardid4" max-width="13" maxlength="13">
+                                    <div class="add-institution">
+                                        <div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-institution">1</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="institution" id="institution"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn-save-ins btn bg-gradient-primary btn-lg"><i
+                                                class='bx bxs-save'></i> บันทึก</button>
+                                        <div class="float-right">
+                                            <button type="button"
+                                                class="bt-add-institution btn btn-block bg-gradient-secondary btn-sm">
+                                                <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="qualification" role="tabpanel"
+                                aria-labelledby="qualification">
+                                <h5>ปริญญาบัตร</h5>
+                                <form class="frm-qualification">
+                                    <input type="hidden" name="cardid" id="cardid5" max-width="13" maxlength="13">
+                                    <div class="add-qua">
+                                        <div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-qua">1</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="qua" id="qua"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn-save-qua btn bg-gradient-primary btn-lg"><i
+                                                class='bx bxs-save'></i> บันทึก</button>
+                                        <div class="float-right">
+                                            <button type="button"
+                                                class="bt-add-qua btn btn-block bg-gradient-secondary btn-sm">
+                                                <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="time_table" role="tabpanel" aria-labelledby="time_table">
+                                <h5>ตารางออกตรวจ</h5>
+                                <form class="frm-table">
+                                    <input type="hidden" name="cardid" id="cardid6" max-width="13" maxlength="13">
+                                    <table width="50%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>วันที่</th>
+                                                <th>เวลาเริ่ม</th>
+                                                <th>เวลาเลิก</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>วันจันทร์</td>
+                                            <td>
+                                                <input type="time" name="tstartmon" id="tstartmon">
+                                            </td>
+                                            <td>
+                                                <input type="time" name="tendmon" id="tendmon">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>วันอังคาร</td>
+                                            <td>
+                                                <input type="time" name="tstarttu" id="tstarttu">
+                                            </td>
+                                            <td>
+                                                <input type="time" name="tendtu" id="tendtu">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>วันพุธ</td>
+                                            <td>
+                                                <input type="time" name="tstartwe" id="tstartwe">
+                                            </td>
+                                            <td>
+                                                <input type="time" name="tendwe" id="tendwe">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>วันพฤหัสบดี</td>
+                                            <td>
+                                                <input type="time" name="tstartth" id="tstartth">
+                                            </td>
+                                            <td>
+                                                <input type="time" name="tendth" id="tendth">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>วันศุกร์</td>
+                                            <td>
+                                                <input type="time" name="tstartfr" id="tstartfr">
+                                            </td>
+                                            <td>
+                                                <input type="time" name="tendfr" id="tendfr">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>วันเสาร์</td>
+                                            <td>
+                                                <input type="time" name="tstartst" id="tstartst">
+                                            </td>
+                                            <td>
+                                                <input type="time" name="tendst" id="tendst">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>วันอาทิตย์</td>
+                                            <td>
+                                                <input type="time" name="tstartsun" id="tstartsun">
+                                            </td>
+                                            <td>
+                                                <input type="time" name="tendsun2" id="tendsun">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <div class="text-center">
+                                        <button type="submit" class="bt-save-time btn bg-gradient-primary btn-lg"><i
+                                                class='bx bxs-save'></i> บันทึก</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <script>
+        $(function () {
+            $('.frm-general').submit(function (e) {
+                e.preventDefault();
+
+                var data = new FormData(this);
+                var cid = $('#cardid').val();
+                $.ajax({
+                    url: "./save_register",
+                    data: data,
+                    method: "post",
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    beforeSend: function () {
+                        $.blockUI({
+                            message: '<img src="./images/loading-buffering.gif" width="48px" height="48px">',
+                            css: {
+                                border: "0px",
+                                background: "none"
+                            },
+                            overlayCSS: {
+                                opacity: 0.7
+                            }
+                        });
+                    },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (res) {
+                        if (res == "err_card") {
+                            $('.err_card').html("*ระบุรหัสบัตรประชาชนไม่ถูกต้อง");
+                        } else if (res == "err_pwd") {
+                            $('.err_pwd').html("*รหัสผ่านไม่ตรงกัน");
+                        } else if (res == "err_pwd_len") {
+                            $(".err_pwd").html("*รหัสผ่านต้องมากกว่า 6 ตัวอักษร");
+                        } else {
+                            if (res == "1") {
+                                $.alert({
+                                    title: 'เกิดข้อผิดพลาด',
+                                    content: 'มีเลขบัตรประชาชนนี้ในระบบแล้ว...',
+                                    icon: 'fas fa-bomb',
+                                    animation: 'scale',
+                                    closeAnimation: 'scale',
+                                    buttons: {
+                                        close: {
+                                            text: 'ปิด',
+                                            btnClass: 'btn-blue'
+                                        }
+                                    }
+                                });
+                            } else {
+                                $('#cardid2').val(cid);
+                                $('#cardid3').val(cid);
+                                $('#cardid4').val(cid);
+                                $('#cardid5').val(cid);
+                                $('#cardid6').val(cid);
+                                $('#services').click();
+                                $('.bt-save-general').attr("disabled", "true");
+                            }
+                        }
+                    }
+                })
+            });
+
+            $('#cardid').keydown(function (e) {
+                var c = $('#cardid').val();
+                if (c.length >= 13) {
+                    $('#cardid').val(c.substr(0, 13));
+                }
+            });
+
+            var num = 1;
+            var num2 = 1;
+            var num3 = 1;
+            var num4 = 1;
+            $('.bt-add-service').click(function () {
+                num++;
+                $('.add-service').append(`<div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-service">${num}</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="serv" id="serv"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>`);
+            });
+
+            $('.bt-add-place').click(function () {
+                num2++;
+                $('.add-place').append(`<div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-place">${num2}</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="pl" id="pl"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>`);
+            });
+
+            $('.bt-add-institution').click(function () {
+                num3++;
+                $('.add-institution').append(`<div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-institution">${num3}</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="institution" id="institution"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>`);
+            });
+
+            $('.bt-add-qua').click(function () {
+                num4++;
+                $('.add-qua').append(`<div class="row">
+                                            <div class="col-1">
+                                                <label><span class="num-qua">${num4}</span></label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="qua" id="qua"
+                                                    class="form-control form-control-sm">
+                                            </div>
+                                        </div><br>`);
+            });
+
+            $('.frm-service').submit(function (e) {
+                e.preventDefault();
+                var data = $(this).serializeArray();
+                $.ajax({
+                    url: "./add-service",
+                    data: data,
+                    method: "post",
+                    beforeSend: function () {
+                        $.blockUI({
+                            message: '<img src="./images/loading-buffering.gif" width="48px" height="48px">',
+                            css: {
+                                border: "0px",
+                                background: "none"
+                            },
+                            overlayCSS: {
+                                opacity: 0.7
+                            }
+                        });
+                    },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (res) {
+                        if (res) {
+                            $('#places').click();
+                            $('.btn-save-service').attr('disabled', 'true');
+                        } else {
+                            $.alert({
+                                title: 'เกิดข้อผิดพลาด',
+                                content: '',
+                                icon: 'fas fa-bomb',
+                                animation: 'scale',
+                                closeAnimation: 'scale',
+                                buttons: {
+                                    close: {
+                                        text: 'ปิด',
+                                        btnClass: 'btn-blue'
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('.frm-place').submit(function (e) {
+                e.preventDefault();
+                var data = $(this).serializeArray();
+                $.ajax({
+                    url: "./add-place",
+                    data: data,
+                    method: "post",
+                    beforeSend: function () {
+                        $.blockUI({
+                            message: '<img src="./images/loading-buffering.gif" width="48px" height="48px">',
+                            css: {
+                                border: "0px",
+                                background: "none"
+                            },
+                            overlayCSS: {
+                                opacity: 0.7
+                            }
+                        });
+                    },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (res) {
+                        if (res) {
+                            $('#institution').click();
+                            $('.btn-save-place').attr('disabled', 'true');
+                        } else {
+                            $.alert({
+                                title: 'เกิดข้อผิดพลาด',
+                                content: '',
+                                icon: 'fas fa-bomb',
+                                animation: 'scale',
+                                closeAnimation: 'scale',
+                                buttons: {
+                                    close: {
+                                        text: 'ปิด',
+                                        btnClass: 'btn-blue'
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('.frm-institution').submit(function (e) {
+                e.preventDefault();
+                var data = $(this).serializeArray();
+                $.ajax({
+                    url: "./add-institution",
+                    data: data,
+                    method: "post",
+                    beforeSend: function () {
+                        $.blockUI({
+                            message: '<img src="./images/loading-buffering.gif" width="48px" height="48px">',
+                            css: {
+                                border: "0px",
+                                background: "none"
+                            },
+                            overlayCSS: {
+                                opacity: 0.7
+                            }
+                        });
+                    },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (res) {
+                        if (res) {
+                            $('#qualifications').click();
+                            $('.btn-save-ins').attr('disabled', 'true');
+                        } else {
+                            $.alert({
+                                title: 'เกิดข้อผิดพลาด',
+                                content: '',
+                                icon: 'fas fa-bomb',
+                                animation: 'scale',
+                                closeAnimation: 'scale',
+                                buttons: {
+                                    close: {
+                                        text: 'ปิด',
+                                        btnClass: 'btn-blue'
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('.frm-qualification').submit(function (e) {
+                e.preventDefault();
+                var data = $(this).serializeArray();
+                $.ajax({
+                    url: "./add-qualification",
+                    data: data,
+                    method: "post",
+                    beforeSend: function () {
+                        $.blockUI({
+                            message: '<img src="./images/loading-buffering.gif" width="48px" height="48px">',
+                            css: {
+                                border: "0px",
+                                background: "none"
+                            },
+                            overlayCSS: {
+                                opacity: 0.7
+                            }
+                        });
+                    },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (res) {
+                        if (res) {
+                            $('#time_tables').click();
+                            $('.btn-save-qua').attr('disabled', 'true');
+                        } else {
+                            $.alert({
+                                title: 'เกิดข้อผิดพลาด',
+                                content: '',
+                                icon: 'fas fa-bomb',
+                                animation: 'scale',
+                                closeAnimation: 'scale',
+                                buttons: {
+                                    close: {
+                                        text: 'ปิด',
+                                        btnClass: 'btn-blue'
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('.frm-table').submit(function (e) {
+                e.preventDefault();
+                var data = $(this).serializeArray();
+                $.ajax({
+                    url: "./add-time-table",
+                    data: data,
+                    method: "post",
+                    beforeSend: function () {
+                        $.blockUI({
+                            message: '<img src="./images/loading-buffering.gif" width="48px" height="48px">',
+                            css: {
+                                border: "0px",
+                                background: "none"
+                            },
+                            overlayCSS: {
+                                opacity: 0.7
+                            }
+                        });
+                    },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (res) {
+                        if (res) {
+                            $('.bt-save-time').attr('disabled', 'true');
+                            $.alert({
+                                title: 'บันทึกข้อมูล',
+                                content: 'บันทึกข้อมูลเรียบร้อย...',
+                                icon: 'fas fa-thumbs-up',
+                                animation: 'scale',
+                                closeAnimation: 'scale',
+                                buttons: {
+                                    close: {
+                                        text: 'ปิด',
+                                        btnClass: 'btn-blue'
+                                    }
+                                }
+                            });
+                        } else {
+                            $.alert({
+                                title: 'เกิดข้อผิดพลาด',
+                                content: '',
+                                icon: 'fas fa-bomb',
+                                animation: 'scale',
+                                closeAnimation: 'scale',
+                                buttons: {
+                                    close: {
+                                        text: 'ปิด',
+                                        btnClass: 'btn-blue'
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        function previewFile() {
+            var preview = document.querySelector('img#preview');
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = './img/noimg.png';
+            }
+        }
+    </script>
+    <!-- /.content -->
+    <%- include("../footer") %>

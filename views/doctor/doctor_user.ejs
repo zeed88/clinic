@@ -1,0 +1,1238 @@
+<%- include('../header') %>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>
+                        <%= data[0].title %>
+                            <%= data[0].name %>
+                                <%= data[0].lastname %>
+                    </h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="card card-info" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลพื้นฐาน</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                    </button>
+                </div>
+                <!-- /.card-tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row row-cols-sm-12">
+                    <div class="col-4 text-center">
+                        <img src="/images/<%= data[0].pic %>" width="200">
+                    </div>
+                    <div class="col">
+                        <small>
+                            <%= data[0].spec %>
+                        </small><br>
+                        <strong style="font-size: 18px;">
+                            <%= data[0].title %>
+                                <%= data[0].name %>
+                                    <%= data[0].lastname %>
+                        </strong><br><br>
+                        <p>
+                            ที่อยู่: <br>
+                            <%= data[0].addr %>
+                        </p>
+                        <p>
+                            ติดต่อ: <br>
+                            เบอร์โทรศัพท์: <%= data[0].tel %><br>
+                                E-mail: <%= data[0].email %><br>
+                                    Line ID: <%= data[0].IDLine %>
+                        </p>
+                        <p>
+                            <span style="font-size: large;">สาขาวิชาที่เชี่ยวชาญ</span><br>
+                            <%= data[0].fac %>
+                        </p>
+                        <% if(locals.sess) { %>
+                            <div class="float-right">
+                                <button class="btn btn-outline-info bt-gen-edit"
+                                    style="border: 3px solid; border-radius: 20px; width:100px" data-toggle="modal"
+                                    data-target="#modal-gen">แก้ไข
+                                </button>
+                            </div>
+                            <% } %>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modal-gen">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="float-right" style="margin-right: 20px;">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><strong style="font-size: 50px">&times;</strong></span>
+                                </button>
+                            </div>
+                            <div id="a">
+
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+            </div>
+
+            <hr>
+            <div class="modal fade" id="modal-ser">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="float-right" style="margin-right: 20px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong style="font-size: 50px">&times;</strong></span>
+                            </button>
+                        </div>
+                        <div id="frm-service">
+                            <div class="modal-body">
+                                <div id="add-serv">
+                                    <% var num=0; service.forEach(serv=> { %>
+                                        <form class="frm-service<%= serv.num %>">
+                                            <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                            <div class="row row-cols-sm-12 row-cols-mb-12" id="nn<%= serv.num %>">
+                                                <input type="text" name="num" id="num" value="<%= serv.num %>"
+                                                    class="form-control form-control-sm" readonly hidden>
+                                                <% num=serv.num; %>
+
+                                                    <div class="col-9">
+                                                        <input type="text" name="serv" id="serv"
+                                                            value="<%= serv.service %>"
+                                                            class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit"
+                                                            class="btn btn-edit-service btn-primary btn-sm"
+                                                            onclick="edit_service('<%= serv.num %>')">
+                                                            แก้ไข
+                                                        </button>
+                                                        <button type="button" class="btn btn-del btn-danger btn-sm"
+                                                            onclick="remove_service(<%=serv.num%>, 'nn<%=serv.num%>', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                            </div>
+                                        </form>
+                                        <% }) %>
+                                </div>
+                                <br>
+                                <div class="float-right">
+                                    <button type="button"
+                                        class="bt-add-service btn btn-block bg-gradient-secondary btn-sm">
+                                        <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                </div>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <script>
+                var n = Number(<%=num %>);
+                $(function () {
+
+                    $('#a').load("/pages/general.ejs");
+                    $('.bt-gen-edit').click(function () {
+                        $('#id').val('<%= data[0]._id %>');
+                        $('#cardid').val('<%= data[0].cardid %>');
+                        $('#title').val('<%= data[0].title %>');
+                        $('#name').val('<%= data[0].name %>');
+                        $('#lastname').val('<%= data[0].lastname %>');
+                        $('#addr').val('<%= data[0].addr %>');
+                        $('#clinic').val('<%= data[0].clinic %>');
+                        $('#tel').val('<%= data[0].tel %>');
+                        $('#email').val('<%= data[0].email %>');
+                        $('#lineid').val('<%= data[0].IDLine %>');
+                        $('#fac').val('<%= data[0].fac %>');
+                        $('#spec').val('<%= data[0].spec %>');
+                        $('#img').val('<%= data[0].pic %>');
+                        var preview = document.querySelector('img#preview');
+                        preview.src = "/images/<%= data[0].pic %>";
+                    });
+
+                    $('.bt-add-service').click(function () {
+                        n = Number(n) + 1;
+                        $('#add-serv').append(`
+                        <form class="frm-service${n}" id="frm-service${n}">
+                                                <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                                <div class="row row-cols-sm-12 row-cols-mb-12" id="nn${n}">
+                                                    <input type="text" name="num" id="num" value="${n}"
+                                                            class="form-control form-control-sm" readonly hidden>
+                                                        <div class="col-9">
+                                                        <input type="text" name="serv" id="serv" class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit" class="btn btn-edit-service btn-primary btn-sm" 
+                                                        onclick="add_service(${n}, this)">
+                                                            เพิ่ม
+                                                        </button>
+                                                        <button type="button" class="btn btn-del btn-danger btn-sm"
+                                                            onclick="remove_service(${n}, 'nn${n}', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                                </div>
+                                            </form>
+                        `);
+                    });
+                });
+
+                function remove_service(num, nn, cardid) {
+                    $('#' + nn).remove();
+                    $.get('/del-service/' + cardid + '/' + num, function (res) {
+                        if (res == '1') {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'ลบข้อมูลเรียบร้อย'
+                            })
+                        }
+                    });
+                    // แก้ไขเฉพาะเลขที่มี 
+                }
+
+                function add_service(num, bt) {
+                    $('.frm-service' + num).submit(function (e) {
+                        e.preventDefault();
+                        if ($(bt).html("เพิ่ม")) {
+                            var data = $(this).serialize();
+                            $.post('/add-service', data, function (res) {
+                                if (res) {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'เพิ่มข้อมูลเรียบร้อย'
+                                    })
+                                    $(bt).html("แก้ไข");
+                                    $(bt).attr("onclick", "edit_service('" + num + "')")
+                                } else {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: 'ไม่มีข้อมูลให้บันทึก'
+                                    })
+                                }
+                            });
+
+                        }
+                    });
+                }
+
+                function edit_service(num) {
+                    $('.frm-service' + num).submit(function (e) {
+                        e.preventDefault();
+                        var data = $(this).serialize();
+                        $.post('/edit-service', data, function (res) {
+                            if (res) {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'แก้ไขข้อมูลเรียบร้อย'
+                                })
+
+                            } else {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: 'ไม่มีข้อมูลให้บันทึก'
+                                })
+                            }
+                        });
+                    });
+                }
+            </script>
+            <div class="row row-cols-sm-3 row-cols-mb-1">
+                <div class="col-4">
+                    <table>
+                        <tr height="10">
+                            <td rowspan="3" valign="top" width="80"><i class='bx bx-user-circle'
+                                    style="font-size: 50px"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span style="font-size: 20px;" valign="top">บริการของคลินิก</span></td>
+                        </tr>
+                        <tr height="200">
+                            <td valign="top">
+                                <p>
+                                    <% service.forEach(ser=> { %>
+                                        <i class='bx bx-radio-circle-marked'></i>
+                                        <%= ser.service %><br>
+                                            <% }) %>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <% if(locals.sess) { %>
+                        <div class="text-center">
+                            <button class="btn-edit-service btn btn-outline-info bt-service-edit"
+                                style="border: 3px solid; border-radius: 20px; width:100px" data-toggle="modal"
+                                data-target="#modal-ser">แก้ไข
+                            </button>
+                        </div>
+                        <% } %>
+                </div>
+
+                <div class="col-4">
+                    <table>
+                        <tr height="10">
+                            <td rowspan="3" valign="top" width="80"><i class='bx bx-buildings'
+                                    style="font-size: 50px"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top"><span style="font-size: 20px;" valign="top">สถานที่ทำงาน</span></td>
+                        </tr>
+                        <tr height="200">
+                            <td valign="top">
+                                <p>
+                                    <% workplace.forEach(work=> { %>
+                                        <i class='bx bx-radio-circle-marked'></i>
+                                        <%= work.workplace %><br>
+                                            <% }) %>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <% if(locals.sess) { %>
+                        <div class="text-center">
+                            <button class="btn btn-outline-info bt-work-edit"
+                                style="border: 3px solid; border-radius: 20px; width:100px" data-toggle="modal"
+                                data-target="#modal-work">แก้ไข
+                            </button>
+                        </div>
+                        <% } %>
+                </div>
+
+                <div class="col-4">
+                    <table>
+                        <tr height="10">
+                            <td rowspan="3" valign="top" width="80"><i class='bx bx-book-bookmark'
+                                    style="font-size: 50px"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top"><span style="font-size: 20px;"
+                                    valign="top">ปริญญาบัตรและสถาบันการศึกษา</span></td>
+                        </tr>
+                        <tr height="150">
+                            <td valign="top">
+                                <p>
+                                    <% inst.forEach(ins=> { %>
+                                        <i class='bx bx-radio-circle-marked'></i>
+                                        <%= ins.institution %><br>
+                                            <% }) %>
+                                </p>
+                                <% if(locals.sess) { %>
+                                    <div class="text-center">
+                                        <button class="btn btn-outline-info bt-qua-edit"
+                                            style="border: 3px solid; border-radius: 20px; width:100px"
+                                            data-toggle="modal" data-target="#modal-institution">แก้ไข
+                                        </button>
+                                    </div>
+                                    <% } %>
+                                        <br>
+                                        <span style="font-size: 20px;" valign="top">วุฒิบัตร</span>
+                                        <p>
+                                            <% qua.forEach(qu=> { %>
+                                                <i class='bx bx-radio-circle-marked'></i>
+                                                <%= qu.qualification %><br>
+                                                    <% }) %>
+                                        </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <% if(locals.sess) { %>
+                        <div class="text-center">
+                            <button class="btn btn-outline-info bt-qua-edit"
+                                style="border: 3px solid; border-radius: 20px; width:100px" data-toggle="modal"
+                                data-target="#modal-qualification">แก้ไข
+                            </button>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+            <div class="modal fade" id="modal-work">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="float-right" style="margin-right: 20px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong style="font-size: 50px">&times;</strong></span>
+                            </button>
+                        </div>
+                        <div id="div-workplace">
+                            <div class="modal-body">
+                                <div id="add-work">
+                                    <% var numWork=0; workplace.forEach(work=> { %>
+                                        <form class="frm-workplace<%= work.num %>">
+                                            <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                            <div class="row row-cols-sm-12 row-cols-mb-12" id="nnWork<%= work.num %>">
+                                                <input type="text" name="num" id="num" value="<%= work.num %>"
+                                                    class="form-control form-control-sm" readonly hidden>
+                                                <% numWork=work.num; %>
+                                                    <div class="col-9">
+                                                        <input type="text" name="workplace" id="workplace"
+                                                            value="<%= work.workplace %>"
+                                                            class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit"
+                                                            class="btn btn-edit-workplace btn-primary btn-sm"
+                                                            onclick="edit_workplace('<%= work.num %>')">
+                                                            แก้ไข
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-del-workplace btn-danger btn-sm"
+                                                            onclick="remove_workplace(<%=work.num%>, 'nnWork<%= work.num %>', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                            </div>
+                                        </form>
+                                        <% }) %>
+                                </div>
+                                <br>
+                                <div class="float-right">
+                                    <button type="button"
+                                        class="bt-add-workplace btn btn-block bg-gradient-secondary btn-sm">
+                                        <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                </div>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <!-- ปริญญาบัตร -->
+            <div class="modal fade" id="modal-institution">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="float-right" style="margin-right: 20px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong style="font-size: 50px">&times;</strong></span>
+                            </button>
+                        </div>
+                        <div id="div-institution">
+                            <div class="modal-body">
+                                <div id="add-inst">
+                                    <% var numInst=0; inst.forEach(ins=> { %>
+                                        <form class="frm-institution<%= ins.num %>">
+                                            <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                            <div class="row row-cols-sm-12 row-cols-mb-12" id="nnInst<%= ins.num %>">
+                                                <input type="text" name="num" id="num" value="<%= ins.num %>"
+                                                    class="form-control form-control-sm" readonly hidden>
+                                                <% numInst=ins.num; %>
+                                                    <div class="col-9">
+                                                        <input type="text" name="inst" id="inst"
+                                                            value="<%= ins.institution %>"
+                                                            class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit"
+                                                            class="btn btn-edit-inst btn-primary btn-sm"
+                                                            onclick="edit_inst('<%= ins.num %>')">
+                                                            แก้ไข
+                                                        </button>
+                                                        <button type="button" class="btn btn-del-inst btn-danger btn-sm"
+                                                            onclick="remove_inst(<%=ins.num%>, 'nnInst<%= ins.num %>', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                            </div>
+                                        </form>
+                                        <% }) %>
+                                </div>
+                                <br>
+                                <div class="float-right">
+                                    <button type="button"
+                                        class="bt-add-inst btn btn-block bg-gradient-secondary btn-sm">
+                                        <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                </div>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!--    End -->
+
+            <!-- วุฒิบัตร -->
+            <div class="modal fade" id="modal-qualification">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="float-right" style="margin-right: 20px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong style="font-size: 50px">&times;</strong></span>
+                            </button>
+                        </div>
+                        <div id="div-qua">
+                            <div class="modal-body">
+                                <div id="add-qua">
+                                    <% var numQua=0; qua.forEach(qu=> { %>
+                                        <form class="frm-qua<%= qu.num %>">
+                                            <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                            <div class="row row-cols-sm-12 row-cols-mb-12" id="nnQua<%= qu.num %>">
+                                                <input type="text" name="num" id="num" value="<%= qu.num %>"
+                                                    class="form-control form-control-sm" readonly hidden>
+                                                <% numQua=qu.num; %>
+                                                    <div class="col-9">
+                                                        <input type="text" name="qua" id="qua"
+                                                            value="<%= qu.qualification %>"
+                                                            class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit"
+                                                            class="btn btn-edit-qua btn-primary btn-sm"
+                                                            onclick="edit_qua('<%= qu.num %>')">
+                                                            แก้ไข
+                                                        </button>
+                                                        <button type="button" class="btn btn-del-qua btn-danger btn-sm"
+                                                            onclick="remove_qua(<%=qu.num%>, 'nnQua<%= qu.num %>', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                            </div>
+                                        </form>
+                                        <% }) %>
+                                </div>
+                                <br>
+                                <div class="float-right">
+                                    <button type="button" class="bt-add-qua btn btn-block bg-gradient-secondary btn-sm">
+                                        <i class="fas fa-plus-square"></i> เพิ่มรายการ</button>
+                                </div>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- End -->
+            <script>
+                var nWork = Number(<%= numWork %>);
+                $(function () {
+                    $('.bt-add-workplace').click(function () {
+                        nWork = Number(nWork) + 1;
+                        $('#add-work').append(`
+                        <form class="frm-workplace${nWork}">
+                                            <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                            <div class="row row-cols-sm-12 row-cols-mb-12" id="nnWork${nWork}">
+                                                <input type="text" name="num" id="num" value="${nWork}"
+                                                    class="form-control form-control-sm" readonly hidden>
+                                                <div class="col-9">
+                                                        <input type="text" name="workplace" id="workplace" 
+                                                            class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit"
+                                                            class="btn btn-save-workplace btn-primary btn-sm"
+                                                            onclick="add_workplace(${nWork}, this)">
+                                                            เพิ่ม
+                                                        </button>
+                                                        <button type="button" class="btn btn-del-workplace btn-danger btn-sm"
+                                                            onclick="remove_workplace(${nWork}, 'nnWork${nWork}', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                            </div>
+                                        </form>
+                        `);
+                    });
+                });
+
+                function remove_workplace(num, nn, cardid) {
+                    $('#' + nn).remove();
+                    $.get('/del-workplace/' + cardid + '/' + num, function (res) {
+                        if (res == '1') {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'ลบข้อมูลเรียบร้อย'
+                            })
+
+                        }
+                    });
+                    // แก้ไขเฉพาะเลขที่มี 
+                }
+
+                function add_workplace(num, bt) {
+                    $('.frm-workplace' + num).submit(function (e) {
+                        e.preventDefault();
+                        if ($(bt).html("เพิ่ม")) {
+                            var data = $(this).serialize();
+                            $.post('/add-workplace', data, function (res) {
+                                if (res) {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'เพิ่มข้อมูลเรียบร้อย'
+                                    })
+                                    $(bt).html("แก้ไข");
+                                    $(bt).attr("onclick", "edit_service('" + num + "')")
+                                } else {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: 'ไม่มีข้อมูลให้บันทึก'
+                                    })
+                                }
+                            });
+
+                        }
+                    });
+                }
+
+                function edit_workplace(num) {
+                    $('.frm-workplace' + num).submit(function (e) {
+                        e.preventDefault();
+                        var data = $(this).serialize();
+                        $.post('/edit-workplace', data, function (res) {
+                            if (res) {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'แก้ไขข้อมูลเรียบร้อย'
+                                })
+
+                            } else {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: 'ไม่มีข้อมูลให้บันทึก'
+                                })
+                            }
+                        });
+                    });
+                }
+
+                // institution
+                var nInst = <%= numInst %>
+                    $(function () {
+                        $('.bt-add-inst').click(function () {
+                            nInst = Number(nInst) + 1;
+                            $('#add-inst').append(`
+                        <form class="frm-institution${nInst}">
+                                            <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                            <div class="row row-cols-sm-12 row-cols-mb-12" id="nnInst${nInst}">
+                                                <input type="text" name="num" id="num" value="${nInst}"
+                                                    class="form-control form-control-sm" readonly hidden>
+                                                
+                                                    <div class="col-9">
+                                                        <input type="text" name="inst" id="inst" 
+                                                        class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit"
+                                                            class="btn btn-add-qua btn-primary btn-sm"
+                                                            onclick="add_inst('${nInst}, this')">
+                                                            เพิ่ม
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-del-inst btn-danger btn-sm"
+                                                            onclick="remove_Inst(${nInst}, 'nnInst${nInst}', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                            </div>
+                                        </form>
+                        `);
+                        });
+                    });
+
+                function remove_inst(num, nn, cardid) {
+                    $('#' + nn).remove();
+                    $.get('/del-institution/' + cardid + '/' + num, function (res) {
+
+                        if (res) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'ลบข้อมูลเรียบร้อย'
+                            })
+
+                        }
+                    });
+                    // แก้ไขเฉพาะเลขที่มี 
+                }
+
+                function add_inst(num, bt) {
+                    $('.frm-institution' + num).submit(function (e) {
+                        e.preventDefault();
+                        if ($(bt).html("เพิ่ม")) {
+                            var data = $(this).serialize();
+                            $.post('/add-institution', data, function (res) {
+                                if (res) {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'เพิ่มข้อมูลเรียบร้อย'
+                                    })
+                                    $(bt).html("แก้ไข");
+                                    $(bt).attr("onclick", "edit_service('" + num + "')")
+                                } else {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: 'ไม่มีข้อมูลให้บันทึก'
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+
+                function edit_inst(num) {
+                    $('.frm-institution' + num).submit(function (e) {
+                        e.preventDefault();
+                        var data = $(this).serialize();
+                        $.post('/edit-institution', data, function (res) {
+                            if (res) {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'แก้ไขข้อมูลเรียบร้อย'
+                                })
+
+                            } else {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: 'ไม่มีข้อมูลให้บันทึก'
+                                })
+                            }
+                        });
+                    });
+                }
+
+                // qualification
+                var nQua = <%= numQua %>
+                    $(function () {
+                        $('.close').click(function () {
+                            window.location.reload();
+                        });
+
+                        $('.bt-add-qua').click(function () {
+                            nQua = Number(nQua) + 1;
+                            $('#add-qua').append(`
+                            <form class="frm-qua${nQua}">
+                                            <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                            <div class="row row-cols-sm-12 row-cols-mb-12" id="nnQua${nQua}">
+                                                <input type="text" name="num" id="num" value="${nQua}"
+                                                    class="form-control form-control-sm" readonly hidden>
+                                                
+                                                    <div class="col-9">
+                                                        <input type="text" name="qua" id="qua"
+                                                            class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="submit"
+                                                            class="btn btn-add-qua btn-primary btn-sm"
+                                                            onclick="add_qua('${nQua}')">
+                                                            เพิ่ม
+                                                        </button>
+                                                        <button type="button" class="btn btn-del-qua btn-danger btn-sm"
+                                                            onclick="remove_qua(${nQua}, 'nnQua${nQua}', '<%= data[0].cardid %>')">ลบ</button>
+                                                    </div>
+                                                    <br><br>
+                                            </div>
+                                        </form>
+                        `);
+                        });
+                    });
+
+                function remove_qua(num, nn, cardid) {
+                    $('#' + nn).remove();
+                    $.get('/del-qualification/' + cardid + '/' + num, function (res) {
+                        if (res) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'ลบข้อมูลเรียบร้อย'
+                            })
+
+                        }
+                    });
+                    // แก้ไขเฉพาะเลขที่มี 
+                }
+
+                function add_qua(num, bt) {
+                    alert
+                    $('.frm-qua' + num).submit(function (e) {
+                        e.preventDefault();
+                        if ($(bt).html("เพิ่ม")) {
+                            var data = $(this).serialize();
+                            $.post('/add-qualification', data, function (res) {
+                                if (res) {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'เพิ่มข้อมูลเรียบร้อย'
+                                    })
+                                    $(bt).html("แก้ไข");
+                                    $(bt).attr("onclick", "edit_service('" + num + "')")
+                                } else {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: 'ไม่มีข้อมูลให้บันทึก'
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+
+                function edit_qua(num) {
+                    $('.frm-qua' + num).submit(function (e) {
+                        e.preventDefault();
+                        var data = $(this).serialize();
+                        $.post('/edit-qualification', data, function (res) {
+                            if (res) {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'แก้ไขข้อมูลเรียบร้อย'
+                                })
+
+                            } else {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: 'ไม่มีข้อมูลให้บันทึก'
+                                })
+                            }
+                        });
+                    });
+                }
+            </script>
+            <hr>
+            <br>
+            <div class="modal fade" id="modal-timetable">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="float-right" style="margin-right: 20px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong style="font-size: 50px">&times;</strong></span>
+                            </button>
+                        </div>
+                        <div id="div-timetable">
+                            <div class="modal-body">
+                                <div id="add-timetable">
+                                    <form class="frm-timetable">
+                                        <input type="hidden" name="cardid" id="cardid" value="<%=data[0].cardid %>">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">วัน</th>
+                                                    <th class="text-center">เวลาเริ่ม</th>
+                                                    <th class="text-center">ถึงเวลา</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% timetable.forEach(time=> { %>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <%= time.day %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <% if(time.day == "จันทร์") { %> 
+                                                                <input type="time" name="monstart" id="monstart" value="<%= time.starttime %>">
+                                                                <button type="button" class="btn-mon-start btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                            <% } else if(time.day == "อังคาร") { %>
+                                                                <input type="time" name="tustart" id="tustart" value="<%= time.starttime %>">
+                                                                <button type="button" class="btn-tu-start btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                            <% } else if(time.day == "พุธ") { %>
+                                                                <input type="time" name="wenstart" id="wenstart" value="<%= time.starttime %>">
+                                                                <button type="button" class="btn-wen-start btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                            <% } else if(time.day == "พฤหัสบดี") { %>
+                                                                <input type="time" name="thustart" id="thustart" value="<%= time.starttime %>">
+                                                                <button type="button" class="btn-thu-start btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                            <% } else if(time.day == "ศุกร์") { %>
+                                                                <input type="time" name="fristart" id="fristart" value="<%= time.starttime %>">
+                                                                <button type="button" class="btn-fri-start btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                            <% } else if(time.day == "เสาร์") { %>
+                                                                <input type="time" name="stastart" id="stastart" value="<%= time.starttime %>">
+                                                                <button type="button" class="btn-sta-start btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                            <% } else if(time.day == "อาทิตย์") { %>
+                                                                <input type="time" name="sunstart" id="sunstart" value="<%= time.starttime %>">
+                                                                <button type="button" class="btn-sun-start btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                            <% } %>
+
+                                                            
+                                                        
+                                                        <td class="text-center">
+                                                            <% if(time.day == "จันทร์") { %> 
+                                                                    <input type="time" name="monend" id="monend" value="<%= time.endtime %>">
+                                                                    <button type="button" class="btn-mon-end btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                                <% } else if(time.day == "อังคาร") { %>
+                                                                    <input type="time" name="tuend" id="tuend" value="<%= time.endtime %>">
+                                                                    <button type="button" class="btn-tu-end btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                                <% } else if(time.day == "พุธ") { %>
+                                                                    <input type="time" name="wenend" id="wenend" value="<%= time.endtime %>">
+                                                                    <button type="button" class="btn-wen-end btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                                <% } else if(time.day == "พฤหัสบดี") { %>
+                                                                    <input type="time" name="thuend" id="thuend" value="<%= time.endtime %>">
+                                                                    <button type="button" class="btn-thu-end btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                                <% } else if(time.day == "ศุกร์") { %>
+                                                                    <input type="time" name="friend" id="friend" value="<%= time.endtime %>">
+                                                                    <button type="button" class="btn-fri-end btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                                <% } else if(time.day == "เสาร์") { %>
+                                                                    <input type="time" name="staend" id="staend" value="<%= time.endtime %>">
+                                                                    <button type="button" class="btn-sta-end btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                                <% } else if(time.day == "อาทิตย์") { %>
+                                                                    <input type="time" name="sunend" id="sunend" value="<%= time.endtime %>">
+                                                                    <button type="button" class="btn-sun-end btn btn-primary btn-sm">ตั้งค่าใหม่</button>
+                                                                <% } %>
+                                                        </td>
+                                                        <td>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                                        <% if(locals.sess) { %>
+                                                            <tr>
+                                                                <td colspan="3" align="center">
+                                                                    <button type="submit" class="btn btn-outline-info bt-time-edit"
+                                                                        style="border: 3px solid; border-radius: 20px; width:100px"
+                                                                        data-toggle="modal"
+                                                                        data-target="#modal-timetable">แก้ไข
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            <% } %>
+                                            </tbody>
+                                        </table>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <script>
+                $(function() {
+                    $('.btn-mon-start').click(function() {
+                        $('#monstart').val('');
+                    });
+                    $('.btn-tu-start').click(function() {
+                        $('#tustart').val('');
+                    });
+                    $('.btn-wen-start').click(function() {
+                        $('#wenstart').val('');
+                    });
+                    $('.btn-thu-start').click(function() {
+                        $('#thustart').val('');
+                    });
+                    $('.btn-fri-start').click(function() {
+                        $('#fristart').val('');
+                    });
+                    $('.btn-sta-start').click(function() {
+                        $('#stastart').val('');
+                    });
+                    $('.btn-sun-start').click(function() {
+                        $('#sunstart').val('');
+                    });
+                    $('.btn-mon-end').click(function() {
+                        $('#monend').val('');
+                    });
+                    $('.btn-tu-end').click(function() {
+                        $('#tuend').val('');
+                    });
+                    $('.btn-wen-end').click(function() {
+                        $('#wenend').val('');
+                    });
+                    $('.btn-thu-end').click(function() {
+                        $('#thuend').val('');
+                    });
+                    $('.btn-fri-end').click(function() {
+                        $('#friend').val('');
+                    });
+                    $('.btn-sta-end').click(function() {
+                        $('#staend').val('');
+                    });
+                    $('.btn-sun-end').click(function() {
+                        $('#sunend').val('');
+                    });
+                });
+            </script>
+            <center>
+                <span style="font-size: 24px;" valign="top"><u>ตารางออกตรวจ</u></span><br><br><br>
+                <table class="table w-50 table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">วัน</th>
+                            <th class="text-center">เวลาเริ่ม</th>
+                            <th class="text-center">ถึงเวลา</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% timetable.forEach(time=> { %>
+                            <tr>
+                                <td class="text-center">
+                                    <%= time.day %>
+                                </td>
+                                <td class="text-center">
+                                    <% if(time.starttime=="" ) { %>
+                                        --
+                                        <% } else { %>
+                                            <%= time.starttime %>
+                                                <% } %>
+                                </td>
+                                <td class="text-center">
+                                    <% if(time.endtime=="" ) { %>
+                                        --
+                                        <% } else { %>
+                                            <%= time.endtime %>
+                                                <% } %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <% if(locals.sess) { %>
+                                    <tr>
+                                        <td colspan="3" align="center">
+                                            <button class="btn btn-outline-info bt-time-edit"
+                                                style="border: 3px solid; border-radius: 20px; width:100px"
+                                                data-toggle="modal" data-target="#modal-timetable">แก้ไข
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+        <!-- /.card-body -->
+        </div>
+    </section>
+    <%- include('../footer') %>

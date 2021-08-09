@@ -1,0 +1,101 @@
+<div class="modal-body">
+    <form action="/save-general-doctor" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" id="id">
+        <input type="hidden" name="cardid" id="cardid">
+        <div class="row">
+            <div class="col-3 text-center">
+                <input type="hidden" name="img" id="img">
+                <img src="" id="preview" width="200"><br><br>
+                <input type="file" name="file" id="file" class="form-control form-control-sm" onchange="previewFile()">
+            </div>
+
+            <div class="col">
+                <div class="row row-cols-sm-12">
+                    <div class="col-2">
+                        <label>*คำนำหน้า</label>
+                        <input type="text" name="title" id="title" class="form-control form-control-sm">
+                    </div>
+                    <div class="col">
+                        <label>*ชื่อ</label>
+                        <input type="text" name="name" id="name" class="form-control form-control-sm">
+                    </div>
+                    <div class="col">
+                        <label>*นามสกุล</label>
+                        <input type="text" name="lastname" id="lastname" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="row row-cols-sm-12">
+                    <div class="col-7">
+                        <label>*ที่อยู่</label>
+                        <input type="text" name="addr" id="addr" class="form-control form-control-sm">
+                    </div>
+                    <div class="col">
+                        <label>*คลินิก</label>
+                        <input type="text" name="clinic" id="clinic" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="row row-cols-sm-12">
+                    <div class="col-3">
+                        <label>*เบอร์โทรศัพท์</label>
+                        <input type="text" name="tel" id="tel" class="form-control form-control-sm"
+                            data-inputmask='"mask": "(999) 999-9999"' data-mask required>
+                    </div>
+                    <div class="col-4">
+                        <label>*E-mail</label>
+                        <input type="email" name="email" id="email" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-5">
+                        <label>Line ID</label>
+                        <input type="text" name="lineid" id="lineid" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="row row-cols-sm-12">
+                    <div class="col-6">
+                        <label>*สาขาวิชาที่เชี่ยวชาญ</label>
+                        <input type="text" name="fac" id="fac" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-6">
+                        <label>*เฉพาะทาง</label>
+                        <input type="text" name="spec" id="spec" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <br>
+                
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary"
+                style="border-radius: 20px; width:100px">บันทึก</button>
+            <button type="button" class="btn btn-danger" style="border-radius: 20px; width:100px"
+                data-dismiss="modal">Close</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $('.btn-show-pwd').click(function () {
+                $('.pwd').css("display", "block");
+                $(this).css("display", "none");
+            });
+
+            $('.btn-hidden-pwd').click(function() {
+                $('.pwd').css("display", "none");
+                $('.btn-show-pwd').css("display", "block");
+            });
+        });
+        function previewFile() {
+            var preview = document.querySelector('img#preview');
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = './img/noimg.png';
+            }
+        }
+    </script>
+</div>
